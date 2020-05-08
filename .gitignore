@@ -1,0 +1,9 @@
+## IDE
+.vscode
+.idea
+*sublime*
+
+## Backup- and local- version
+*.bak
+*.local
+.swp
