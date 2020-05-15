@@ -1,0 +1,118 @@
+---
+# https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/fluentd-elasticsearch/fluentd-es-ds.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: fluentd
+  namespace: kube-logs
+  labels:
+    app: fluentd
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: fluentd
+  labels:
+    app: fluentd
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - "namespaces"
+      - "pods"
+    verbs:
+      - "get"
+      - "list"
+      - "watch"
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: fluentd
+  labels:
+    app: fluentd
+roleRef:
+  kind: ClusterRole
+  name: fluentd
+  apiGroup: ""
+subjects:
+  - kind: ServiceAccount
+    name: fluentd
+    namespace: kube-logs
+    apiGroup: ""
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd
+  namespace: kube-logs
+  labels:
+    app: fluentd
+spec:
+  selector:
+    matchLabels:
+      app: fluentd
+  template:
+    metadata:
+      labels:
+        app: fluentd
+      # This annotation ensures that fluentd does not get evicted if the node
+      # supports critical pod annotation based priority scheme.
+      # Note that this does not guarantee admission on the nodes (#40573).
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
+    spec:
+      priorityClassName: system-node-critical
+      serviceAccount: fluentd
+      serviceAccountName: fluentd
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+      containers:
+        - name: fluentd
+          image: quay.io/fluentd_elasticsearch/fluentd:v2.8.0
+#          env:
+#            - name: FLUENTD_ARGS
+#              value: --no-supervisor -q
+          ports:
+            - containerPort: 24231
+              name: prometheus
+              protocol: TCP
+          # Probes
+          livenessProbe:
+            tcpSocket:
+              port: prometheus
+            initialDelaySeconds: 3
+            failureThreshold: 5
+            timeoutSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: prometheus
+            initialDelaySeconds: 5
+            timeoutSeconds: 10
+          # Limits
+          resources:
+            limits:
+              memory: 500Mi
+            requests:
+              cpu: 50m
+              memory: 200Mi
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/fluent/config.d
+            - name: varlog
+              mountPath: /var/log
+            - name: varlibdockercontainers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: config-volume
+          configMap:
+            name: fluentd-es-config
+        - name: varlog
+          hostPath:
+            path: "/var/log"
+        - name: varlibdockercontainers
+          hostPath:
+            path: "/var/lib/docker/containers"

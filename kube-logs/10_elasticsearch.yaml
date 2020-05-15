@@ -1,0 +1,116 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-logs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  namespace: kube-logs
+spec:
+  ports:
+    - name: es-http
+      port: 9200
+  selector:
+    app: elasticsearch
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch
+  namespace: kube-logs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  serviceName: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
+                  - key: kube-logs-storage
+                    operator: In
+                    values:
+                      - 'true'
+      initContainers:
+        - name: increase-vm-max-map
+          image: busybox:1.31
+          command: ["sysctl", "-w", "vm.max_map_count=262144"]
+          securityContext:
+            privileged: true
+        - name: increase-fd-ulimit
+          image: busybox:1.31
+          command: ["sh", "-c", "ulimit -n 65536"]
+          securityContext:
+            privileged: true
+        - name: fix-permissions
+          image: busybox:1.31
+          command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: es-data
+              mountPath: /usr/share/elasticsearch/data
+      containers:
+        - name: elasticsearch
+          image: 'docker.elastic.co/elasticsearch/elasticsearch-oss:7.6.2'
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: cluster.name
+              value: "kube-logs"
+            - name: discovery.type
+              value: "single-node"
+            - name: node.name
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: ES_JAVA_OPTS
+              value: "-Xms768m -Xmx768m"
+            - name: PROCESSORS
+              value: "1"
+          ports:
+            - name: es-http
+              containerPort: 9200
+            - name: es-inter-node
+              containerPort: 9300
+          # Probes
+          livenessProbe:
+            tcpSocket:
+              port: es-http
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+#          readinessProbe:
+#            httpGet:
+#              path: /_cat/health
+#              port: es-http
+#            failureThreshold: 3
+#            initialDelaySeconds: 5
+#            periodSeconds: 10
+          # Limits
+          resources:
+            limits:
+              #cpu: '2000m'
+              memory: '2048Mi'
+            requests:
+              cpu: '50m'
+              memory: '1000Mi'
+          volumeMounts:
+            - name: es-data
+              mountPath: /usr/share/elasticsearch/data
+      volumes:
+        - name: es-data
+          hostPath:
+            path: '/srv/kube-logs-es'
