@@ -2,6 +2,7 @@
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:3651",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -18,8 +19,7 @@
   "editable": true,
   "gnetId": 882,
   "graphTooltip": 1,
-  "id": 1,
-  "iteration": 1590587894628,
+  "iteration": 1590597903797,
   "links": [],
   "panels": [
     {
@@ -33,7 +33,7 @@
       "filterNull": false,
       "fontSize": "100%",
       "gridPos": {
-        "h": 4,
+        "h": 5,
         "w": 5,
         "x": 0,
         "y": 0
@@ -88,73 +88,94 @@
       "type": "table"
     },
     {
-      "columns": [
-        {
-          "text": "Current",
-          "value": "current"
-        }
-      ],
-      "datasource": "Prometheus",
-      "description": "For example, version 11.22.33 is translated to 11022033",
-      "filterNull": false,
-      "fontSize": "100%",
+      "aliasColors": {},
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
-        "h": 4,
+        "h": 5,
         "w": 5,
         "x": 5,
         "y": 0
       },
-      "hideTimeOverride": false,
-      "id": 17,
-      "links": [],
-      "pageSize": null,
-      "scroll": false,
-      "showHeader": true,
-      "sort": {
-        "col": 3,
-        "desc": true
+      "hiddenSeries": false,
+      "id": 48,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
       },
-      "styles": [
-        {
-          "align": "auto",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "decimals": 0,
-          "pattern": "/.*/",
-          "thresholds": [],
-          "type": "number",
-          "unit": "none"
-        }
-      ],
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
       "targets": [
         {
-          "expr": "ClickHouseMetrics_VersionInteger{namespace=~\"$namespace\",job=~\"$job\"}",
+          "expr": "rate(container_cpu_usage_seconds_total{container=\"au-tsdb-clickhouse\",service=\"mon-prometheus-operator-kubelet\"}[5m])*100",
           "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "Version: {{job}}",
-          "metric": "ClickHouseMetrics_VersionInteger",
-          "refId": "A",
-          "step": 60
-        },
-        {
-          "expr": "ClickHouseMetrics_Revision\r{namespace=~\"$namespace\",job=~\"$job\"}",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "Revision {{job}}",
-          "metric": "ClickHouseMetrics_VersionInteger",
-          "refId": "B",
-          "step": 60
+          "legendFormat": "{{container}}",
+          "refId": "A"
         }
       ],
+      "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
-      "title": "Version",
-      "transform": "timeseries_aggregations",
-      "type": "table"
+      "title": "CPU-core Usage, %",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "aliasColors": {},
@@ -170,7 +191,7 @@
       "fillGradient": 0,
       "grid": {},
       "gridPos": {
-        "h": 4,
+        "h": 5,
         "w": 8,
         "x": 10,
         "y": 0
@@ -289,7 +310,7 @@
       "fillGradient": 1,
       "grid": {},
       "gridPos": {
-        "h": 4,
+        "h": 5,
         "w": 6,
         "x": 18,
         "y": 0
@@ -377,6 +398,75 @@
       }
     },
     {
+      "columns": [
+        {
+          "text": "Current",
+          "value": "current"
+        }
+      ],
+      "datasource": "Prometheus",
+      "description": "For example, version 11.22.33 is translated to 11022033",
+      "filterNull": false,
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 0,
+        "y": 5
+      },
+      "hideTimeOverride": false,
+      "id": 17,
+      "links": [],
+      "pageSize": null,
+      "scroll": false,
+      "showHeader": true,
+      "sort": {
+        "col": 3,
+        "desc": true
+      },
+      "styles": [
+        {
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 0,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "none"
+        }
+      ],
+      "targets": [
+        {
+          "expr": "ClickHouseMetrics_VersionInteger{namespace=~\"$namespace\",job=~\"$job\"}",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Version: {{job}}",
+          "metric": "ClickHouseMetrics_VersionInteger",
+          "refId": "A",
+          "step": 60
+        },
+        {
+          "expr": "ClickHouseMetrics_Revision\r{namespace=~\"$namespace\",job=~\"$job\"}",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Revision {{job}}",
+          "metric": "ClickHouseMetrics_VersionInteger",
+          "refId": "B",
+          "step": 60
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Version",
+      "transform": "timeseries_aggregations",
+      "type": "table"
+    },
+    {
       "aliasColors": {},
       "bars": false,
       "cacheTimeout": null,
@@ -388,17 +478,17 @@
       "gridPos": {
         "h": 5,
         "w": 5,
-        "x": 0,
-        "y": 4
+        "x": 5,
+        "y": 5
       },
       "hiddenSeries": false,
-      "id": 42,
+      "id": 49,
       "legend": {
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -420,19 +510,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(ClickHouseProfileEvents_WriteBufferFromFileDescriptorWriteFailed\r{namespace=~\"$namespace\",job=~\"$job\"}[1m])",
-          "format": "time_series",
+          "expr": "container_memory_working_set_bytes{container=\"au-tsdb-clickhouse\",service=\"mon-prometheus-operator-kubelet\"}",
           "instant": false,
           "interval": "",
-          "legendFormat": "Write Failed by {{job}}",
-          "refId": "B"
-        },
-        {
-          "expr": "rate(ClickHouseProfileEvents_ReadBufferFromFileDescriptorReadFailed{namespace=~\"$namespace\",job=~\"$job\"}\r[1m])",
-          "format": "time_series",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "Read Failed by {{job}}",
+          "legendFormat": "{{container}}",
           "refId": "A"
         }
       ],
@@ -440,7 +521,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "r/w Failed",
+      "title": "Memory Usage",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -456,7 +537,8 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "$$hashKey": "object:4362",
+          "format": "bytes",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -464,96 +546,7 @@
           "show": true
         },
         {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "cacheTimeout": null,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 5,
-        "w": 5,
-        "x": 5,
-        "y": 4
-      },
-      "hiddenSeries": false,
-      "id": 48,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "rate(container_cpu_usage_seconds_total{container=\"au-tsdb-clickhouse\"}[5m])*100",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "CPU-core Usage, %",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
+          "$$hashKey": "object:4363",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -580,7 +573,7 @@
         "h": 5,
         "w": 8,
         "x": 10,
-        "y": 4
+        "y": 5
       },
       "hiddenSeries": false,
       "id": 43,
@@ -691,7 +684,7 @@
         "h": 5,
         "w": 6,
         "x": 18,
-        "y": 4
+        "y": 5
       },
       "hiddenSeries": false,
       "id": 8,
@@ -802,133 +795,16 @@
         "h": 5,
         "w": 5,
         "x": 0,
-        "y": 9
+        "y": 10
       },
       "hiddenSeries": false,
-      "id": 46,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "hideEmpty": false,
-        "hideZero": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pluginVersion": "6.7.3",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "Soft by au-tsdb-clickhouse",
-          "color": "#FADE2A"
-        },
-        {
-          "alias": "Hard by au-tsdb-clickhouse",
-          "color": "#C4162A",
-          "nullPointMode": "null",
-          "points": true,
-          "yaxis": 2
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "rate(ClickHouseProfileEvents_HardPageFaults{namespace=~\"$namespace\",job=~\"$job\"}[5m])",
-          "format": "time_series",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "Hard by {{job}}",
-          "refId": "B"
-        },
-        {
-          "expr": "rate(ClickHouseProfileEvents_SoftPageFaults\r{namespace=~\"$namespace\",job=~\"$job\"}[1m])",
-          "format": "time_series",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "Soft by {{job}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Page Fault",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "cacheTimeout": null,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 5,
-        "w": 5,
-        "x": 5,
-        "y": 9
-      },
-      "hiddenSeries": false,
-      "id": 49,
+      "id": 42,
       "legend": {
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -950,120 +826,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "container_memory_working_set_bytes{container=\"au-tsdb-clickhouse\"}",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Memory Usage",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "bytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "cacheTimeout": null,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 5,
-        "w": 8,
-        "x": 10,
-        "y": 9
-      },
-      "hiddenSeries": false,
-      "id": 44,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pluginVersion": "6.7.3",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "descriptor by au-tsdb-clickhouse",
-          "yaxis": 2
-        },
-        {
-          "alias": "descriptor bytes by au-tsdb-clickhouse"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "rate(ClickHouseProfileEvents_WriteBufferFromFileDescriptorWriteBytes\r{namespace=~\"$namespace\",job=~\"$job\"}[1m])",
+          "expr": "rate(ClickHouseProfileEvents_WriteBufferFromFileDescriptorWriteFailed\r{namespace=~\"$namespace\",job=~\"$job\"}[1m])",
           "format": "time_series",
           "instant": false,
           "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "descriptor bytes by {{job}}",
+          "legendFormat": "Write Failed by {{job}}",
           "refId": "B"
         },
         {
-          "expr": "rate(ClickHouseProfileEvents_WriteBufferFromFileDescriptorWrite{namespace=~\"$namespace\",job=~\"$job\"}\r[1m])",
+          "expr": "rate(ClickHouseProfileEvents_ReadBufferFromFileDescriptorReadFailed{namespace=~\"$namespace\",job=~\"$job\"}\r[1m])",
           "format": "time_series",
           "instant": false,
           "interval": "",
-          "legendFormat": "descriptor by {{job}}",
+          "legendFormat": "Read Failed by {{job}}",
           "refId": "A"
         }
       ],
@@ -1071,7 +846,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Write Descriptor",
+      "title": "r/w Failed",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1087,7 +862,7 @@
       },
       "yaxes": [
         {
-          "format": "bytes",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1101,117 +876,6 @@
           "max": null,
           "min": null,
           "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "description": "Show which percent of mark files (.mrk) read from memory instead of disk",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {},
-      "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 18,
-        "y": 9
-      },
-      "hiddenSeries": false,
-      "id": 11,
-      "isNew": true,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "hideEmpty": false,
-        "hideZero": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "links": [
-        {
-          "targetBlank": true,
-          "title": "mark_cache_size",
-          "url": "https://clickhouse.tech/docs/en/operations/server_settings/settings/#server-mark-cache-size"
-        },
-        {
-          "targetBlank": true,
-          "title": "MergeTree architecture",
-          "url": "https://clickhouse.tech/docs/en/development/architecture/#merge-tree"
-        }
-      ],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "rate(ClickHouseProfileEvents_MarkCacheHits{namespace=~\"$namespace\",job=~\"$job\"}[1m]) / (rate(ClickHouseProfileEvents_MarkCacheHits{namespace=~\"$namespace\",job=~\"$job\"}[1m]) + rate(ClickHouseProfileEvents_MarkCacheMisses{namespace=~\"$namespace\",job=~\"$job\"}[1m]))",
-          "hide": false,
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "1m {{job}}",
-          "refId": "A",
-          "step": 4
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Marks Cache Hit Rate",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percentunit",
-          "label": "",
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
         }
       ],
       "yaxis": {
@@ -1236,7 +900,7 @@
         "h": 5,
         "w": 5,
         "x": 5,
-        "y": 14
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 38,
@@ -1379,7 +1043,345 @@
         "h": 5,
         "w": 8,
         "x": 10,
-        "y": 14
+        "y": 10
+      },
+      "hiddenSeries": false,
+      "id": 44,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "6.7.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "descriptor by au-tsdb-clickhouse",
+          "yaxis": 2
+        },
+        {
+          "alias": "descriptor bytes by au-tsdb-clickhouse"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "rate(ClickHouseProfileEvents_WriteBufferFromFileDescriptorWriteBytes\r{namespace=~\"$namespace\",job=~\"$job\"}[1m])",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "descriptor bytes by {{job}}",
+          "refId": "B"
+        },
+        {
+          "expr": "rate(ClickHouseProfileEvents_WriteBufferFromFileDescriptorWrite{namespace=~\"$namespace\",job=~\"$job\"}\r[1m])",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "descriptor by {{job}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Write Descriptor",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "Show which percent of mark files (.mrk) read from memory instead of disk",
+      "editable": true,
+      "error": false,
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 10
+      },
+      "hiddenSeries": false,
+      "id": 11,
+      "isNew": true,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "mark_cache_size",
+          "url": "https://clickhouse.tech/docs/en/operations/server_settings/settings/#server-mark-cache-size"
+        },
+        {
+          "targetBlank": true,
+          "title": "MergeTree architecture",
+          "url": "https://clickhouse.tech/docs/en/development/architecture/#merge-tree"
+        }
+      ],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "rate(ClickHouseProfileEvents_MarkCacheHits{namespace=~\"$namespace\",job=~\"$job\"}[1m]) / (rate(ClickHouseProfileEvents_MarkCacheHits{namespace=~\"$namespace\",job=~\"$job\"}[1m]) + rate(ClickHouseProfileEvents_MarkCacheMisses{namespace=~\"$namespace\",job=~\"$job\"}[1m]))",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "1m {{job}}",
+          "refId": "A",
+          "step": 4
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Marks Cache Hit Rate",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "percentunit",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 0,
+        "y": 15
+      },
+      "hiddenSeries": false,
+      "id": 46,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "6.7.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Soft by au-tsdb-clickhouse",
+          "color": "#FADE2A"
+        },
+        {
+          "alias": "Hard by au-tsdb-clickhouse",
+          "color": "#C4162A",
+          "nullPointMode": "null",
+          "points": true,
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "rate(ClickHouseProfileEvents_HardPageFaults{namespace=~\"$namespace\",job=~\"$job\"}[5m])",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "Hard by {{job}}",
+          "refId": "B"
+        },
+        {
+          "expr": "rate(ClickHouseProfileEvents_SoftPageFaults\r{namespace=~\"$namespace\",job=~\"$job\"}[1m])",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "Soft by {{job}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Page Fault",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 10,
+        "y": 15
       },
       "hiddenSeries": false,
       "id": 45,
@@ -1495,7 +1497,7 @@
         "h": 5,
         "w": 6,
         "x": 18,
-        "y": 14
+        "y": 15
       },
       "hiddenSeries": false,
       "id": 5,
