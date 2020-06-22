@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: servicemonitor-rabbitmq
+  namespace: monitoring
+  labels:
+    release: mon
+    app: servicemonitor-rabbitmq
+spec:
+  jobLabel: rabbitmq
+  endpoints:
+    - port: rmq-metrics
+      interval: 5s
+  selector:
+    matchLabels:
+      monitoring-type: rabbitmq
+      monitoring-enabled: "true"
+  namespaceSelector:
+    matchNames:
+      - default

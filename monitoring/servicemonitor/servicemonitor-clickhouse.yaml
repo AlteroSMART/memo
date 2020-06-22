@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: servicemonitor-clickhouse
+  namespace: monitoring
+  labels:
+    release: mon
+    app: servicemonitor-clickhouse
+spec:
+  jobLabel: clickhouse
+  endpoints:
+    - port: clickhouse-metrics
+      interval: 5s
+  selector:
+    matchLabels:
+      monitoring-type: clickhouse
+      monitoring-enabled: "true"
+  namespaceSelector:
+    matchNames:
+      - default

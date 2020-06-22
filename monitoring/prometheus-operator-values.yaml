@@ -1,0 +1,81 @@
+prometheus:
+  prometheusSpec:
+    #externalUrl: http://alpha.au.alterosmart.dev/prometheus/
+    retention: '30d'
+    retentionSize: '50GiB'
+    scrapeInterval: '15s'
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 50Gi
+          #storageClassName: local-path
+          volumeName: pv-mon-prometheus
+
+grafana:
+  adminPassword: Password123!
+  grafana.ini:
+    server:
+      root_url: '%(protocol)s://%(domain)s:%(http_port)s/grafana/'
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+      - name: 'custom'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: true
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/custom
+  dashboards:
+    custom:
+      node-exporter-from-cn:
+        datasource: Prometheus
+        gnetId: 11074
+        revision: 1
+      clickhouse-metrics:
+        url: https://raw.githubusercontent.com/AlteroSMART/memo/master/monitoring/dashboards/clickhouse.json
+      redis-metrics:
+        url: https://raw.githubusercontent.com/AlteroSMART/memo/master/monitoring/dashboards/redis.json
+      rabbitmq-metrics:
+        datasource: Prometheus
+        gnetId: 4279
+##  AlteroUniversal dashboards
+      au-back-ui:
+        datasource: Prometheus
+        url: https://raw.githubusercontent.com/AlteroSMART/memo/master/monitoring/dashboards/au-back-ui.json
+      au-data-quality:
+        datasource: Prometheus
+        url: https://raw.githubusercontent.com/AlteroSMART/memo/master/monitoring/dashboards/au-data-quality.json
+      au-formula:
+        datasource: Prometheus
+        url: https://raw.githubusercontent.com/AlteroSMART/memo/master/monitoring/dashboards/au-formula.json
+      au-nsi:
+        datasource: Prometheus
+        url: https://raw.githubusercontent.com/AlteroSMART/memo/master/monitoring/dashboards/au-nsi.json
+      au-router:
+        datasource: Prometheus
+        url: https://raw.githubusercontent.com/AlteroSMART/memo/master/monitoring/dashboards/au-router.json
+      au-soap-export:
+        datasource: Prometheus
+        url: https://raw.githubusercontent.com/AlteroSMART/memo/master/monitoring/dashboards/au-soap-export.json
+      au-tsdb:
+        datasource: Prometheus
+        url: https://raw.githubusercontent.com/AlteroSMART/memo/master/monitoring/dashboards/au-tsdb.json
+      data-receiver:
+        datasource: Prometheus
+        url: https://raw.githubusercontent.com/AlteroSMART/memo/master/monitoring/dashboards/data-receiver.json
+
+
+# ServiceMonitors
+coreDns.enabled: false
+kubeApiServer.enabled: false
+kubeControllerManager.enabled: false
+kubeDns.enabled: false
+kubeEtcd.enabled: false
+kubeProxy.enabled: false
+kubeScheduler.enabled: false

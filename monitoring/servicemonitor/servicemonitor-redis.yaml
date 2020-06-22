@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: servicemonitor-redis
+  namespace: monitoring
+  labels:
+    release: mon
+    app: servicemonitor-redis
+spec:
+  jobLabel: redis
+  endpoints:
+    - port: redis-metrics
+      interval: 5s
+  selector:
+    matchLabels:
+      monitoring-type: redis
+      monitoring-enabled: "true"
+  namespaceSelector:
+    matchNames:
+      - default

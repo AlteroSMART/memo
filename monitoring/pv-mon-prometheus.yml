@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-mon-prometheus
+spec:
+  accessModes: ["ReadWriteOnce"]
+  capacity:
+    storage: 50Gi
+  hostPath:
+    path: "/srv/mon-prometheus"
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  volumeMode: Filesystem
