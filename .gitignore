@@ -6,4 +6,6 @@
 ## Backup- and local- version
 *.bak
 *.local
+*.local.yaml
+*.local.yml
 .swp

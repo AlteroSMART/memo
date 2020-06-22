@@ -10,7 +10,7 @@ to create & configure Alertmanager and Prometheus instances using the Operator.
 Download  `prometheus-operator-values.yaml` and change `grafana.adminPassword` value !
 ```console
 $ wget https://raw.githubusercontent.com/AlteroSMART/memo/master/monitoring/prometheus-operator-values.yaml \
-  >  config-monitoring.local.yaml
+  -O config-monitoring.local.yaml
 $ nano config-monitoring.local.yaml
 ```
 
