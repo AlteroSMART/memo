@@ -23,7 +23,7 @@ $ kubectl apply -f pv-mon-prometheus.yml
 
 $ helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 $ helm install mon stable/prometheus-operator -n monitoring \
-  --values config-monitoring.local.yaml  --version 8.15.6
+  --values config-monitoring.local.yaml  --version 8.13.14
 ```
 
 ### Configure Ingress-Nginx
