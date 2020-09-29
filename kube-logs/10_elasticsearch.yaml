@@ -65,7 +65,7 @@ spec:
               mountPath: /usr/share/elasticsearch/data
       containers:
         - name: elasticsearch
-          image: 'docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.0'
+          image: 'docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.2'
           imagePullPolicy: IfNotPresent
           env:
             - name: cluster.name
