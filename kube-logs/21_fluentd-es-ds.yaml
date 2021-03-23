@@ -70,7 +70,7 @@ spec:
           effect: NoSchedule
       containers:
         - name: fluentd
-          image: quay.io/fluentd_elasticsearch/fluentd:v2.8.0
+          image: quay.io/fluentd_elasticsearch/fluentd:v3.2.0
 #          env:
 #            - name: FLUENTD_ARGS
 #              value: --no-supervisor -q

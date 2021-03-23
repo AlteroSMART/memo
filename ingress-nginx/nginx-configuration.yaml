@@ -15,3 +15,6 @@ data:
   proxy-connect-timeout: "2"
   ssl-protocols: "TLSv1.3 TLSv1.2"
   ssl-early-data: "true"
+  enable-real-ip: "true"
+  forwarded-for-header: "X-Forwarded-For"
+  proxy-real-ip-cidr: "0.0.0.0/0"
