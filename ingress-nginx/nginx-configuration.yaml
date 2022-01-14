@@ -18,3 +18,5 @@ data:
   enable-real-ip: "true"
   forwarded-for-header: "X-Forwarded-For"
   proxy-real-ip-cidr: "0.0.0.0/0"
+  proxy-read-timeout: "3600"
+  proxy-send-timeout: "3600"
