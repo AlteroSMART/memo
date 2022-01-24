@@ -4,10 +4,12 @@ metadata:
   name: nginx-lb-tcp
   namespace: ingress-nginx
   labels:
-    app: ingress-nginx
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
 spec:
   selector:
-    app: ingress-nginx
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
   externalTrafficPolicy: Local
   ports:
     - name: http
